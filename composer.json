@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "config": {
         "bin-dir": "bin/",
-        "secure-http": false
+        "secure-http": false,
     },
     "repositories": [
         {

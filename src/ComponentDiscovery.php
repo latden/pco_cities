@@ -13,7 +13,7 @@ class ComponentDiscovery {
   /**
    * The extension discovery iterator.
    *
-   * @var \Drupal\Core\Extension\ExtensionDiscovery
+   * @var ExtensionDiscovery
    */
   protected $discovery;
 
@@ -44,7 +44,7 @@ class ComponentDiscovery {
   /**
    * Returns an extension object for the pco_cities profile.
    *
-   * @return \Drupal\Core\Extension\Extension
+   * @return Extension
    *   The pco_cities profile extension object.
    *
    * @throws \RuntimeException

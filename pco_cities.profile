@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\language\ConfigurableLanguageManager;
 /**
  * @file
  * Contains pco_cities.profile.
@@ -98,7 +99,7 @@ function pco_cities_import_language_config(array &$install_state) {
       // Uses the base name of the .yml file to get the config name.
       $config_name = basename($file_name, '.yml');
 
-      /** @var \Drupal\language\ConfigurableLanguageManager $language_manager */
+      /** @var ConfigurableLanguageManager $language_manager */
       $config = $language_manager->getLanguageConfigOverride($langcode, $config_name);
 
       foreach ($yaml as $config_key => $config_value) {

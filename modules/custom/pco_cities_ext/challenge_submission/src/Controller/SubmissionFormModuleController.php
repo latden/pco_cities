@@ -15,32 +15,32 @@ class SubmissionFormModuleController extends ControllerBase {
   /**
    * The path alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var AliasManagerInterface
    */
   private $aliasManager;
 
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Language\LanguageManagerInterface
+   * @var LanguageManagerInterface
    */
   protected $langManager;
 
   /**
-   * @var \Drupal\Core\Entity\Query\QueryFactory
+   * @var QueryFactory
    */
   protected $query;
 
   /**
    * Constructs a SubmissionFormModuleController object.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $aliasManager
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   * @param \Drupal\Core\Language\LanguageManagerInterface $langManager
-   * @param \Drupal\Core\Entity\Query\QueryFactory $query
+   * @param AliasManagerInterface $aliasManager
+   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param LanguageManagerInterface $langManager
+   * @param QueryFactory $query
    */
   public function __construct(AliasManagerInterface $aliasManager, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $langManager, QueryFactory $query) {
     $this->aliasManager = $aliasManager;
@@ -104,7 +104,7 @@ class SubmissionFormModuleController extends ControllerBase {
 
     $page['#challenge_name'] = $node->title->value;
     $page['#challenge_department'] = $node->get('field_challenge_department')->getValue()[0]['value'];
-    $page['#challenge_image'] = file_create_url($node->field_challenge_image->entity->uri->value);
+    $page['#challenge_image'] = \Drupal::service('file_url_generator')->generateAbsoluteString($node->field_challenge_image->entity->uri->value);
     $page['#challenge_url'] = '/node/' . $node->id();
     $page['#submission_success'] = TRUE;
     $page['#submission_email'] = $request->get('email');
@@ -183,7 +183,7 @@ class SubmissionFormModuleController extends ControllerBase {
     $form['#challenge_url'] = '/node/' . $node->id();
     $form['#challenge_name'] = $node->title->value;
     $form['#challenge_department'] = $node->get('field_challenge_department')->getValue()[0]['value'];
-    $form['#challenge_image'] = file_create_url($node->field_challenge_image->entity->uri->value);
+    $form['#challenge_image'] = \Drupal::service('file_url_generator')->generateAbsoluteString($node->field_challenge_image->entity->uri->value);
 
     $form['#submission_error'] = $submission_error;
 
@@ -244,7 +244,7 @@ class SubmissionFormModuleController extends ControllerBase {
 
     $page['#challenge_name'] = $node->title->value;
     $page['#challenge_department'] = $node->get('field_challenge_department')->getValue()[0]['value'];
-    $page['#challenge_image'] = file_create_url($node->field_challenge_image->entity->uri->value);
+    $page['#challenge_image'] = \Drupal::service('file_url_generator')->generateAbsoluteString($node->field_challenge_image->entity->uri->value);
     $page['#challenge_url'] = '/node/' . $node->id();
     $page['#submission_success'] = TRUE;
     $page['#submission_email'] = $request->get('email');
@@ -321,7 +321,7 @@ class SubmissionFormModuleController extends ControllerBase {
 
     $form['#challenge_name'] = $node->title->value;
     $form['#challenge_department'] = $node->get('field_challenge_department')->getValue()[0]['value'];
-    $form['#challenge_image'] = file_create_url($node->field_challenge_image->entity->uri->value);
+    $form['#challenge_image'] = \Drupal::service('file_url_generator')->generateAbsoluteString($node->field_challenge_image->entity->uri->value);
     $form['#challenge_url'] = '/node/' . $node->id();
     $form['#submission_error'] = $submission_error;
 

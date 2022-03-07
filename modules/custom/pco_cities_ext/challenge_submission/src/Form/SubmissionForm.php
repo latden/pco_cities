@@ -19,42 +19,42 @@ class SubmissionForm extends FormBase {
   /**
    * The path alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var AliasManagerInterface
    */
   protected $aliasManager;
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
   /**
-   * @var \Drupal\Core\Database\Connection
+   * @var Connection
    */
   protected $db;
 
   /**
-   * @var \Drupal\Core\Language\LanguageManagerInterface
+   * @var LanguageManagerInterface
    */
   protected $langManager;
 
   /**
-   * @var \Drupal\Core\Entity\Query\QueryFactory
+   * @var QueryFactory
    */
   protected $query;
 
   /**
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   * @var ConfigFactoryInterface
    */
   protected $configFactory;
 
   /**
    * Constructs a SubmissionFormModuleController object.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $aliasManager
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   * @param \Drupal\Core\Database\Connection $db
-   * @param \Drupal\Core\Language\LanguageManagerInterface $langManager
-   * @param \Drupal\Core\Entity\Query\QueryFactory $query
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   * @param AliasManagerInterface $aliasManager
+   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param Connection $db
+   * @param LanguageManagerInterface $langManager
+   * @param QueryFactory $query
+   * @param ConfigFactoryInterface $configFactory
    */
   public function __construct(AliasManagerInterface $aliasManager, EntityTypeManagerInterface $entityTypeManager, Connection $db, LanguageManagerInterface $langManager, QueryFactory $query, ConfigFactoryInterface $configFactory) {
     $this->aliasManager = $aliasManager;
@@ -243,13 +243,13 @@ class SubmissionForm extends FormBase {
     // Loop through multiple file upload and grab download links.
     foreach ($form_state->getValue('proposal') as $file) {
       $file = $this->entityTypeManager->getStorage('file')->load($file);
-      $file_uri = file_create_url($file->get('uri')->value);
+      $file_uri = \Drupal::service('file_url_generator')->generateAbsoluteString($file->get('uri')->value);
       array_push($file_arr, ['name' => $file->get('filename')->value, 'link' => $file_uri]);
     }
 
     // Also grab download link for the image.
     $file = $this->entityTypeManager->getStorage('file')->load($form_state->getValue('proposal_image')[0]);
-    $file_uri = file_create_url($file->get('uri')->value);
+    $file_uri = \Drupal::service('file_url_generator')->generateAbsoluteString($file->get('uri')->value);
     array_push($file_arr, ['name' => $file->get('filename')->value, 'link' => $file_uri]);
 
     // Template string to be thrown into email template for download links.
@@ -269,15 +269,15 @@ class SubmissionForm extends FormBase {
       'link' => $form_state->getValue('link'),
       'file_links' => $template_string,
       'email_contents' => $node->get('field_challenge_email_contents')->getValue()[0]['value'] ?? '',
-      'template_link' => file_create_url(drupal_get_path('module', 'challenge_submission') . '/templates/submission-email.html'),
-      'footer_logo' => file_create_url(drupal_get_path('module', 'challenge_submission') . '/assets/wmms-blk.png'),
-      'header_logo' => file_create_url(drupal_get_path('module', 'challenge_submission') . '/assets/sig-blk-en.png')
+      'template_link' => \Drupal::service('file_url_generator')->generateAbsoluteString(\Drupal::service('extension.list.module')->getPath('challenge_submission') . '/templates/submission-email.html'),
+      'footer_logo' => \Drupal::service('file_url_generator')->generateAbsoluteString(\Drupal::service('extension.list.module')->getPath('challenge_submission') . '/assets/wmms-blk.png'),
+      'header_logo' => \Drupal::service('file_url_generator')->generateAbsoluteString(\Drupal::service('extension.list.module')->getPath('challenge_submission') . '/assets/sig-blk-en.png')
     ];
 
     $this->saveToAuditLog($variables);
 
     // Generate the template.
-    $template = file_get_contents(drupal_get_path('module', 'challenge_submission') . '/templates/submission-email.html');
+    $template = file_get_contents(\Drupal::service('extension.list.module')->getPath('challenge_submission') . '/templates/submission-email.html');
     $template = $this->renderTemplate($template, $variables);
 
     $config = $this->configFactory->get('challenge_submission.settings');

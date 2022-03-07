@@ -8,14 +8,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SubmissionAuditLogController extends ControllerBase {
   /**
-   * @var \Drupal\Core\Database\Connection
+   * @var Connection
    */
   protected $db;
 
   /**
    * Constructs a SubmissionFormModuleController object.
    *
-   * @param \Drupal\Core\Database\Connection $db
+   * @param Connection $db
    */
   public function __construct(Connection $db) {
     $this->db = $db;

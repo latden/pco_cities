@@ -32,7 +32,7 @@ function _pco_cities_setup_base_configurations() {
 function _pco_cities_setup_branding() {
   // Set the path to the logo, favicon and README file based on install
   // directory.
-  $pco_cities_path = drupal_get_path('profile', 'pco_cities');
+  $pco_cities_path = \Drupal::service('extension.list.profile')->getPath('pco_cities');
   \Drupal::configFactory()
     ->getEditable('system.theme.global')
     ->set('logo', [

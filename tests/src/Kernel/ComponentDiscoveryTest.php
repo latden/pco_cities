@@ -16,14 +16,14 @@ class ComponentDiscoveryTest extends KernelTestBase {
   /**
    * The ComponentDiscovery under test.
    *
-   * @var \Drupal\pco_cities\ComponentDiscovery
+   * @var ComponentDiscovery
    */
   protected $discovery;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->discovery = new ComponentDiscovery(

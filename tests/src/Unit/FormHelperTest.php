@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\pco_cities\Unit;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Drupal\Core\Render\ElementInfoManagerInterface;
 use Drupal\pco_cities\FormHelper;
 use Drupal\Tests\UnitTestCase;
@@ -13,6 +14,7 @@ use Drupal\Tests\UnitTestCase;
  */
 class FormHelperTest extends UnitTestCase {
 
+  use ProphecyTrait;
   /**
    * @covers ::applyStandardProcessing
    */

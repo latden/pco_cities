@@ -15,23 +15,23 @@ class Package {
   /**
    * The root Composer package (i.e., this composer.json).
    *
-   * @var \Composer\Package\RootPackageInterface
+   * @var RootPackageInterface
    */
   protected $rootPackage;
 
   /**
    * The locker.
    *
-   * @var \Composer\Package\Locker
+   * @var Locker
    */
   protected $locker;
 
   /**
    * Package constructor.
    *
-   * @param \Composer\Package\RootPackageInterface $root_package
+   * @param RootPackageInterface $root_package
    *   The root package (i.e., this composer.json).
-   * @param \Composer\Package\Locker $locker
+   * @param Locker $locker
    *   The locker.
    */
   public function __construct(RootPackageInterface $root_package, Locker $locker) {
@@ -42,7 +42,7 @@ class Package {
   /**
    * Script entry point.
    *
-   * @param \Composer\Script\Event $event
+   * @param Event $event
    *   The script event.
    */
   public static function execute(Event $event) {

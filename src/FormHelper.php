@@ -12,14 +12,14 @@ class FormHelper {
   /**
    * The element info plugin manager.
    *
-   * @var \Drupal\Core\Render\ElementInfoManagerInterface
+   * @var ElementInfoManagerInterface
    */
   protected $elementInfo;
 
   /**
    * FormHelper constructor.
    *
-   * @param \Drupal\Core\Render\ElementInfoManagerInterface $element_info
+   * @param ElementInfoManagerInterface $element_info
    *   The element info plugin manager.
    */
   public function __construct(ElementInfoManagerInterface $element_info) {

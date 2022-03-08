@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\login_redirect\Functional;
 
+use Drupal\user\UserInterface;
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
@@ -22,7 +23,7 @@ class LoadTest extends BrowserTestBase {
   /**
    * A user with permission to administer site configuration.
    *
-   * @var \Drupal\user\UserInterface
+   * @var UserInterface
    */
   protected $user;
 

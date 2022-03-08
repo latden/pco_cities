@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\DrupalExtension\Context\MinkContext;
 /**
  * @file
  * Contains \PCOCITIESSubContext.
@@ -21,7 +22,7 @@ class PCOCITIESSubContext extends DrupalSubContextBase {
   /**
    * The Mink context.
    *
-   * @var \Drupal\DrupalExtension\Context\MinkContext
+   * @var MinkContext
    */
   protected $minkContext;
 
@@ -57,7 +58,9 @@ class PCOCITIESSubContext extends DrupalSubContextBase {
    */
   public function checkWatchdog(AfterScenarioScope $scope) {
     if (db_table_exists('watchdog')) {
-      $log = db_select('watchdog', 'w')
+      // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
+      // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
+      $log = \Drupal::database()->select('watchdog', 'w')
         ->fields('w')
         ->condition('w.type', 'php', '=')
         ->condition('w.timestamp', $this->startTime, '>=')

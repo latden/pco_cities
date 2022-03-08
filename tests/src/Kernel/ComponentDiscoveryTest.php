@@ -16,7 +16,7 @@ class ComponentDiscoveryTest extends KernelTestBase {
   /**
    * The ComponentDiscovery under test.
    *
-   * @var \Drupal\pco_cities\ComponentDiscovery
+   * @var ComponentDiscovery
    */
   protected $discovery;
 

@@ -17,44 +17,44 @@ class ChallengePageController extends ControllerBase {
   /**
    * The path alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var AliasManagerInterface
    */
   private $aliasManager;
 
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Language\LanguageManagerInterface
+   * @var LanguageManagerInterface
    */
   protected $langManager;
 
   /**
-   * @var \Drupal\Core\Entity\Query\QueryFactory
+   * @var QueryFactory
    */
   protected $query;
 
   /**
-   * @var \Drupal\Core\Session\AccountInterface
+   * @var AccountInterface
    */
   protected $currentUser;
 
   /**
-   * @var \Symfony\Component\HttpFoundation\RequestStack
+   * @var RequestStack
    */
   protected $requestStack;
 
   /**
    * Constructs a ChallengePageController object.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $aliasManager
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   * @param \Drupal\Core\Language\LanguageManagerInterface $langManager
-   * @param \Drupal\Core\Entity\Query\QueryFactory $query
-   * @param \Drupal\Core\Session\AccountInterface $currentUser
-   * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+   * @param AliasManagerInterface $aliasManager
+   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param LanguageManagerInterface $langManager
+   * @param QueryFactory $query
+   * @param AccountInterface $currentUser
+   * @param RequestStack $requestStack
    */
   public function __construct(AliasManagerInterface $aliasManager, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $langManager, QueryFactory $query, AccountInterface $currentUser, RequestStack $requestStack) {
     $this->aliasManager = $aliasManager;

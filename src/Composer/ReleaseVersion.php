@@ -2,6 +2,7 @@
 
 namespace Drupal\pco_cities\Composer;
 
+use Symfony\Component\Finder\SplFileInfo;
 use Drupal\pco_cities\IniEncoder;
 use Composer\Script\Event;
 use Symfony\Component\Finder\Finder;
@@ -15,7 +16,7 @@ class ReleaseVersion {
   /**
    * Script entry point.
    *
-   * @param \Composer\Script\Event $event
+   * @param Event $event
    *   The script event.
    */
   public static function execute(Event $event) {
@@ -30,7 +31,7 @@ class ReleaseVersion {
       ->in('.')
       ->exclude('html');
 
-    /** @var \Symfony\Component\Finder\SplFileInfo $info_file */
+    /** @var SplFileInfo $info_file */
     foreach ($finder as $info_file) {
       $info = Yaml::parse($info_file->getContents());
 
@@ -60,7 +61,7 @@ class ReleaseVersion {
       ->name('build-pco_cities.make')
       ->in('.');
 
-    /** @var \Symfony\Component\Finder\SplFileInfo $make_file */
+    /** @var SplFileInfo $make_file */
     foreach ($finder as $make_file) {
       $make = $encoder->parse($make_file->getContents());
       $make['projects']['pco_cities']['download']['tag'] = $version;

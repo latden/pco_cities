@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ChallengePagesRedirectSubscriber implements EventSubscriberInterface {
 
   /**
-   * @var \Drupal\Core\Language\LanguageManagerInterface
+   * @var LanguageManagerInterface
    */
   protected $languageManager;
 
@@ -45,7 +45,7 @@ class ChallengePagesRedirectSubscriber implements EventSubscriberInterface {
   /**
    * Redirect requests for challenge go to custom module controller route.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param GetResponseEvent $event
    */
   public function redirectMyContentTypeNode(GetResponseEvent $event) {
     $request = $event->getRequest();

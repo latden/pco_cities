@@ -19,42 +19,42 @@ class SubmissionForm extends FormBase {
   /**
    * The path alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var AliasManagerInterface
    */
   protected $aliasManager;
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
   /**
-   * @var \Drupal\Core\Database\Connection
+   * @var Connection
    */
   protected $db;
 
   /**
-   * @var \Drupal\Core\Language\LanguageManagerInterface
+   * @var LanguageManagerInterface
    */
   protected $langManager;
 
   /**
-   * @var \Drupal\Core\Entity\Query\QueryFactory
+   * @var QueryFactory
    */
   protected $query;
 
   /**
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   * @var ConfigFactoryInterface
    */
   protected $configFactory;
 
   /**
    * Constructs a SubmissionFormModuleController object.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $aliasManager
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   * @param \Drupal\Core\Database\Connection $db
-   * @param \Drupal\Core\Language\LanguageManagerInterface $langManager
-   * @param \Drupal\Core\Entity\Query\QueryFactory $query
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
+   * @param AliasManagerInterface $aliasManager
+   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param Connection $db
+   * @param LanguageManagerInterface $langManager
+   * @param QueryFactory $query
+   * @param ConfigFactoryInterface $configFactory
    */
   public function __construct(AliasManagerInterface $aliasManager, EntityTypeManagerInterface $entityTypeManager, Connection $db, LanguageManagerInterface $langManager, QueryFactory $query, ConfigFactoryInterface $configFactory) {
     $this->aliasManager = $aliasManager;

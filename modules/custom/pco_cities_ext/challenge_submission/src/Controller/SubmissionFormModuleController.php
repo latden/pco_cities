@@ -15,32 +15,32 @@ class SubmissionFormModuleController extends ControllerBase {
   /**
    * The path alias manager.
    *
-   * @var \Drupal\Core\Path\AliasManagerInterface
+   * @var AliasManagerInterface
    */
   private $aliasManager;
 
   /**
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
-   * @var \Drupal\Core\Language\LanguageManagerInterface
+   * @var LanguageManagerInterface
    */
   protected $langManager;
 
   /**
-   * @var \Drupal\Core\Entity\Query\QueryFactory
+   * @var QueryFactory
    */
   protected $query;
 
   /**
    * Constructs a SubmissionFormModuleController object.
    *
-   * @param \Drupal\Core\Path\AliasManagerInterface $aliasManager
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
-   * @param \Drupal\Core\Language\LanguageManagerInterface $langManager
-   * @param \Drupal\Core\Entity\Query\QueryFactory $query
+   * @param AliasManagerInterface $aliasManager
+   * @param EntityTypeManagerInterface $entityTypeManager
+   * @param LanguageManagerInterface $langManager
+   * @param QueryFactory $query
    */
   public function __construct(AliasManagerInterface $aliasManager, EntityTypeManagerInterface $entityTypeManager, LanguageManagerInterface $langManager, QueryFactory $query) {
     $this->aliasManager = $aliasManager;

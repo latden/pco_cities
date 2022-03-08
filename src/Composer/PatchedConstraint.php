@@ -14,7 +14,7 @@ class PatchedConstraint {
   /**
    * Script entry point.
    *
-   * @param \Composer\Script\Event $event
+   * @param Event $event
    *   The script event.
    *
    * @return bool
@@ -25,7 +25,7 @@ class PatchedConstraint {
     $patched_dependencies = static::getPatchedDependencyConstraints($root_package);
     $error = [];
 
-    /** @var \Composer\Package\Link $package */
+    /** @var Link $package */
     foreach ($patched_dependencies as $package) {
       if (static::packageIsUnpinned($package)) {
         $error[] = $package->getTarget() . ': ' . $package->getPrettyConstraint();
@@ -44,10 +44,10 @@ class PatchedConstraint {
   /**
    * Filters the requires section to packages that are patched.
    *
-   * @param \Composer\Package\RootPackageInterface $root_package
+   * @param RootPackageInterface $root_package
    *   The root composer.json package.
    *
-   * @return \Composer\Package\Link
+   * @return Link
    *   List of required packages that are patched.
    */
   protected static function getPatchedDependencyConstraints(RootPackageInterface $root_package) {
@@ -60,7 +60,7 @@ class PatchedConstraint {
   /**
    * Determines if a given package's constraint is pinned or not.
    *
-   * @param \Composer\Package\Link $package
+   * @param Link $package
    *   The package to check.
    *
    * @return bool

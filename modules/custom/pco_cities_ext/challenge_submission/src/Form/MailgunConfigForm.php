@@ -47,7 +47,7 @@ class MailgunConfigForm extends ConfigFormBase {
 
     $config->save();
 
-    drupal_set_message($this->t("Settings saved"));
+    $this->messenger()->addStatus($this->t("Settings saved"));
 
     return parent::submitForm($form, $form_state);
   }

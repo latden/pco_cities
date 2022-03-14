@@ -81,10 +81,10 @@
         "cweagans/composer-patches": "^1.6.4",
         "drupal/core-composer-scaffold": "*",
         "drush/drush": "^9.0",
-        "drupalwxt/wxt": "3.0.1",
+        "drupalwxt/wxt": "2.2.19",
         "drupal/mailgun": "^1.0",
         "drupal/smtp": "^1.0",
-        "pco-bcp/impact_bootstrap": "dev-master",
+        "pco-bcp/impact_bootstrap": "dev-master"
     },
     "autoload": {
         "psr-4": {

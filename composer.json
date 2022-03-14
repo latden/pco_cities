@@ -84,7 +84,7 @@
         "drupalwxt/wxt": "3.0.1",
         "drupal/mailgun": "^1.0",
         "drupal/smtp": "^1.0",
-        "pco-bcp/impact_bootstrap": "dev-master"
+        "pco-bcp/impact_bootstrap": "dev-master",
     },
     "autoload": {
         "psr-4": {

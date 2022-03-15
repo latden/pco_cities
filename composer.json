@@ -12,7 +12,7 @@
     "repositories": [
         {
            "type": "vcs",
-            "url": "https://github.com/mazz0016/wxt.git",
+            "url": "https://github.com/mazz0016/wxt",
              "package": {
                  "name": "drupalwxt/wxt",
                   "version": "8.x-2.x",

@@ -96,8 +96,7 @@
     },
     "require": {
         "cweagans/composer-patches": "^1.6.4",
-        "drupal/core-composer-scaffold": "*",
-        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "drupal-composer/drupal-scaffold": "*",
         "drush/drush": "^9.0",
         "drupalwxt/wxt": "dev-8.x-2.x",
         "drupal/mailgun": "^1.0",

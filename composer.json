@@ -12,13 +12,13 @@
     "repositories": [
         {
            "type": "vcs",
-            "url": "https://github.com/mazz0016/wxt",
+            "url": "https://github.com/latden/wxt",
              "package": {
                  "name": "drupalwxt/wxt",
                   "version": "8.x-2.x",
                   "type": "package",
                   "source": {
-                     "url": "git@github.com/mazz0016/wxt.git",
+                     "url": "git@github.com/latden/wxt.git",
                      "type": "git",
                      "reference": "dev-8.x-2.x"
                     }

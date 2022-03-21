@@ -11,12 +11,29 @@
     },
     "repositories": [
         {
+           "type": "vcs",
+            "url": "https://github.com/latden/wxt",
+             "package": {
+                 "name": "drupalwxt/wxt",
+                  "version": "8.x-3.x",
+                  "type": "package",
+                  "source": {
+                     "url": "git@github.com/latden/wxt.git",
+                     "type": "git",
+                     "reference": "dev-8.x-3.x"
+                    }
+                  }
+            },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
         {
             "type": "composer",
-            "url": "https://asset-packagist.org"
+            "url": "https://asset-packagist.org",
+            "exclude": [
+                "drupalwxt/wxt"
+            ]
         },
         {
             "type" : "composer",
@@ -81,7 +98,7 @@
         "cweagans/composer-patches": "^1.6.4",
         "drupal/core-composer-scaffold": "*",
         "drush/drush": "^9.0",
-        "drupalwxt/wxt": "3.0.5-dev",
+        "drupalwxt/wxt": "dev-3.0.5",
         "drupal/mailgun": "^1.0",
         "drupal/smtp": "^1.0",
         "pco-bcp/impact_bootstrap": "dev-master"

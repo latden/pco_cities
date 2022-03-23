@@ -30,7 +30,7 @@ function challenge_pages_theme() {
 /**
  * Implements hook_presave().
  */
-function challenge_pages_node_presave(NodeInterface $node) {
+/*function challenge_pages_node_presave(NodeInterface $node) { //Fix for following issue: https://gitlab.com/pco-bcp/asg-web/-/issues/192
   if ($node->getType() == 'challenge') {
 
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
@@ -267,7 +267,7 @@ function challenge_pages_node_presave(NodeInterface $node) {
       }
     }
   }
-}
+}*/
 
 function get_url_alias($customAlias) {
 

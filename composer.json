@@ -80,7 +80,7 @@
     "require": {
         "cweagans/composer-patches": "^1.6.4",
         "drupal/core-composer-scaffold": "*",
-        "drush/drush": "^9.0",
+        "drush/drush": ">=9.0",
         "drupalwxt/wxt": "4.0.x-dev",
         "drupal/mailgun": "^1.0",
         "drupal/smtp": "^1.0",

@@ -1,7 +1,7 @@
 name: 'PCO CITIES Extend'
 description: 'Wrapper module for enabling all of the PCO CITIES Extensions.'
 type: module
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: 'PCO CITIES'
 
 # Required modules

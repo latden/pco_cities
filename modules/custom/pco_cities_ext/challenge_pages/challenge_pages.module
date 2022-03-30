@@ -30,19 +30,22 @@ function challenge_pages_theme() {
 /**
  * Implements hook_presave().
  */
-/*function challenge_pages_node_presave(NodeInterface $node) { //Fix for following issue: https://gitlab.com/pco-bcp/asg-web/-/issues/192
+//WIP, Please do not delete commented out code
+function challenge_pages_node_presave(NodeInterface $node) { //Fix for following issue: https://gitlab.com/pco-bcp/asg-web/-/issues/192
   if ($node->getType() == 'challenge') {
 
     $language = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
     // Check for conflict on friendly url name. Must be unique.
+    $language_other = '';
     $friendly_url = clean_url($node->get('field_friendly_url')->getValue()[0]['value']);
     $original_friendly_url = '';
 
-    if($node->original) {
-      $original_friendly_url = clean_url($node->original->getTranslation('en')->get('field_friendly_url')->getValue()[0]['value']);
-    }
-
+    //if($language_current == 'en') {
+      if($node->original) {
+       $original_friendly_url = clean_url($node->original->getTranslation('en')->get('field_friendly_url')->getValue()[0]['value']);
+      }
+    //}
     if (get_friendly_url_name($friendly_url) and $friendly_url != $node->original->getTranslation($language)->get('field_friendly_url')->getValue()[0]['value']) {
       $response = new RedirectResponse(\Drupal::request()->getRequestUri());
       $response->send();
@@ -60,12 +63,15 @@ function challenge_pages_theme() {
       }
     }
 
+    $uuid_service = \Drupal::service('uuid');
+
 
     // Delete original paths - this may or may not do anything.
-    if($node->original) {
+    /*if($node->original) {
       // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
       // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-      \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $original_friendly_url)->execute();
+      \Drupal::database()->delete('path_alias')->condition('source', '/challenges/' . $original_friendly_url)->execute();
+      // OLD \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $original_friendly_url)->execute();
       // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
       // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
       \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $original_friendly_url . '/news')->execute();
@@ -106,7 +112,7 @@ function challenge_pages_theme() {
     \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/news')->execute();
     // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
     // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-    \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/submission')->execute();
+    \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/submission')->execute();*/
 
     // Check if french alias already exists, if not then create.
     if(array_key_exists('fr', $node->getTranslationLanguages())) {
@@ -114,10 +120,13 @@ function challenge_pages_theme() {
         if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']))) {
           // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
           // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-          \Drupal::database()->insert('url_alias')->fields([
-            'source' => '/challenges/' . $friendly_url_english,
+          $uuid1 = $uuid_service->generate();
+          \Drupal::database()->insert('path_alias')->fields([
+            'uuid' => $uuid1,
+            'path' => '/challenges/' . $friendly_url_english,
             'alias' => '/defis/' . $friendly_url_french,
             'langcode' => 'fr',
+            'status' => '1',
           ])->execute();
         }
       };
@@ -128,10 +137,13 @@ function challenge_pages_theme() {
         if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/nouvelles')) {
           // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
           // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-          \Drupal::database()->insert('url_alias')->fields([
-            'source' => '/challenges/' . $friendly_url_english . '/news',
+          $uuid2 = $uuid_service->generate();
+          \Drupal::database()->insert('path_alias')->fields([
+            'uuid' => $uuid2,
+            'path' => '/challenges/' . $friendly_url_english . '/news',
             'alias' => '/defis/' . $friendly_url_french . '/nouvelles',
             'langcode' => 'fr',
+            'status' => '1',
           ])->execute();
         }
       };
@@ -142,10 +154,13 @@ function challenge_pages_theme() {
         if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/soumission')) {
           // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
           // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-          \Drupal::database()->insert('url_alias')->fields([
-            'source' => '/challenges/' . $friendly_url_english . '/submission',
+          $uuid3 = $uuid_service->generate();
+          \Drupal::database()->insert('path_alias')->fields([
+            'uuid' => $uuid3,
+            'path' => '/challenges/' . $friendly_url_english . '/submission',
             'alias' => '/defis/' . $friendly_url_french . '/soumission',
             'langcode' => 'fr',
+            'status' => '1',
           ])->execute();
         }
       };
@@ -159,16 +174,19 @@ function challenge_pages_theme() {
 
         // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
         // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-        \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
+        \Drupal::database()->delete('path_alias')->condition('path', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
 
         if ($node->getTranslation('fr')->get('field_friendly_url')->getValue() && $node->getTranslation('fr')->get('field_challeng_subpage_url_1')->getValue()) {
           if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_1')->getValue()[0]['value'])) {
             // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
             // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-            \Drupal::database()->insert('url_alias')->fields([
-              'source' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_1')->getValue()[0]['value'],
+            $uuid4 = $uuid_service->generate();
+            \Drupal::database()->insert('path_alias')->fields([
+              'uuid' => $uuid4,
+              'path' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_1')->getValue()[0]['value'],
               'alias' => '/defis/' . $friendly_url_french . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_1')->getValue()[0]['value'],
               'langcode' => 'fr',
+              'status' => '1',
             ])->execute();
           }
         };
@@ -182,16 +200,19 @@ function challenge_pages_theme() {
 
         // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
         // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-        \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
+        \Drupal::database()->delete('path_alias')->condition('path', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
 
         if ($node->getTranslation('fr')->get('field_friendly_url')->getValue() && $node->getTranslation('fr')->get('field_challeng_subpage_url_2')->getValue()) {
           if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_2')->getValue()[0]['value'])) {
             // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
             // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-            \Drupal::database()->insert('url_alias')->fields([
-              'source' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_2')->getValue()[0]['value'],
+            $uuid5 = $uuid_service->generate();
+            \Drupal::database()->insert('path_alias')->fields([
+              'uuid' => $uuid5,
+              'path' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_2')->getValue()[0]['value'],
               'alias' => '/defis/' . $friendly_url_french . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_2')->getValue()[0]['value'],
               'langcode' => 'fr',
+              'status' => '1',
             ])->execute();
           }
         };
@@ -205,16 +226,19 @@ function challenge_pages_theme() {
 
         // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
         // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-        \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
+        \Drupal::database()->delete('path_alias')->condition('path', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
 
         if ($node->getTranslation('fr')->get('field_friendly_url')->getValue() && $node->getTranslation('fr')->get('field_challeng_subpage_url_3')->getValue()) {
           if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_3')->getValue()[0]['value'])) {
             // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
             // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-            \Drupal::database()->insert('url_alias')->fields([
-              'source' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_3')->getValue()[0]['value'],
+            $uuid6 = $uuid_service->generate();
+            \Drupal::database()->insert('path_alias')->fields([
+              'uuid' => $uuid6,
+              'path' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_3')->getValue()[0]['value'],
               'alias' => '/defis/' . $friendly_url_french . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_3')->getValue()[0]['value'],
               'langcode' => 'fr',
+              'status' => '1',
             ])->execute();
           }
         };
@@ -228,16 +252,19 @@ function challenge_pages_theme() {
 
         // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
         // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-        \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
+        \Drupal::database()->delete('path_alias')->condition('path', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
 
         if ($node->getTranslation('fr')->get('field_friendly_url')->getValue() && $node->getTranslation('fr')->get('field_challeng_subpage_url_4')->getValue()) {
           if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_4')->getValue()[0]['value'])) {
             // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
             // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-            \Drupal::database()->insert('url_alias')->fields([
-              'source' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_4')->getValue()[0]['value'],
+            $uuid7 = $uuid_service->generate();
+            \Drupal::database()->insert('path_alias')->fields([
+              'uuid' => $uuid7,
+              'path' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_4')->getValue()[0]['value'],
               'alias' => '/defis/' . $friendly_url_french . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_4')->getValue()[0]['value'],
               'langcode' => 'fr',
+              'status' => '1',
             ])->execute();
           }
         };
@@ -251,29 +278,32 @@ function challenge_pages_theme() {
 
         // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
         // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-        \Drupal::database()->delete('url_alias')->condition('source', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
+        \Drupal::database()->delete('path_alias')->condition('path', '/challenges/' . $friendly_url . '/' . $friendly_subpage_url)->execute();
 
         if ($node->getTranslation('fr')->get('field_friendly_url')->getValue() && $node->getTranslation('fr')->get('field_challeng_subpage_url_5')->getValue()) {
           if (!empty(get_url_alias('/defis/' . $node->getTranslation('fr')->get('field_friendly_url')->getValue()[0]['value']) . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_5')->getValue()[0]['value'])) {
             // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
             // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-            \Drupal::database()->insert('url_alias')->fields([
-              'source' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_5')->getValue()[0]['value'],
+            $uuid8 = $uuid_service->generate();
+            \Drupal::database()->insert('path_alias')->fields([
+              'uuid' => $uuid8,
+              'path' => '/challenges/' . $friendly_url_english . '/' . $node->getTranslation('en')->get('field_challeng_subpage_url_5')->getValue()[0]['value'],
               'alias' => '/defis/' . $friendly_url_french . '/' . $node->getTranslation('fr')->get('field_challeng_subpage_url_5')->getValue()[0]['value'],
               'langcode' => 'fr',
+              'status' => '1',
             ])->execute();
           }
         };
       }
     }
   }
-}*/
+}
 
 function get_url_alias($customAlias) {
 
   // TODO: Drupal Rector Notice: Please delete the following comment after you've made any necessary changes.
   // You will need to use `\Drupal\core\Database\Database::getConnection()` if you do not yet have access to the container here.
-  $query = \Drupal::database()->query("SELECT pid FROM url_alias WHERE alias =:alias", [':alias' => $customAlias]);
+  $query = \Drupal::database()->query("SELECT id FROM path_alias WHERE alias =:alias", [':alias' => $customAlias]);
 
   $query->allowRowCount = TRUE;
 

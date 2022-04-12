@@ -66,3 +66,13 @@ function _pco_cities_setup_themes() {
     ->set('use_admin_theme', TRUE)
     ->save(TRUE);
 }
+
+/**
+ * taxonomy field translation status uninstalled 
+ */
+function pco_cities_update_8701() {
+  $definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  if ($content_translation_status = $definition_update_manager->getFieldStorageDefinition('content_translation_status', 'taxonomy_term')) {
+    $definition_update_manager->uninstallFieldStorageDefinition($content_translation_status);
+  }
+}
